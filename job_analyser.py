@@ -1,6 +1,6 @@
 import sqlite3
 
-# -------- APPLY --------
+
 def apply_job():
     conn = sqlite3.connect("job.db")
     cur = conn.cursor()
@@ -8,7 +8,7 @@ def apply_job():
     name = input("Enter name: ")
     exp = int(input("Enter experience: "))
 
-    # show available skills
+    
     cur.execute("select skill_name from skills")
     skills = cur.fetchall()
 
@@ -21,7 +21,7 @@ def apply_job():
     choice = int(input("Choose skill number: "))
     chosen_skill = skills[choice-1][0]
 
-    # saving data
+    
     cur.execute("insert into applicant values(?,?,?)", (name, exp, chosen_skill))
 
     conn.commit()
@@ -30,12 +30,12 @@ def apply_job():
     print("Applied successfully\n")
 
 
-# -------- RECRUIT --------
+
 def recruit_people():
     conn = sqlite3.connect("job.db")
     cur = conn.cursor()
 
-    # display skills again
+    
     cur.execute("select skill_name from skills")
     skills = cur.fetchall()
 
@@ -48,10 +48,10 @@ def recruit_people():
 
     min_exp = int(input("Enter minimum experience: "))
 
-    # increase search count
+    
     cur.execute("update skills set search_count = search_count+1 where skill_name=?", (req_skill,))
 
-    # check applicants
+    
     cur.execute("select * from applicant where skill=? and years_of_experience>=?", (req_skill, min_exp))
     result = cur.fetchall()
 
@@ -67,7 +67,7 @@ def recruit_people():
     print()
 
 
-# -------- TREND --------
+
 def check_trend():
     conn = sqlite3.connect("job.db")
     cur = conn.cursor()
@@ -83,7 +83,7 @@ def check_trend():
     print()
 
 
-# -------- MENU --------
+
 while True:
     print("====== MENU ======")
     print("1. Apply")
